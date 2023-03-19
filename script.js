@@ -1,17 +1,31 @@
-text = document.getElementsByClassName('animate');
+text = document.getElementsByClassName("animate");
+titlesLine = document.getElementById('titles');
 defaultTexts = [];
-for(let i = 0; i < text.length; i++)
-{
+for (let i = 0; i < text.length; i++) {
+    console.log(text.length);
     text[i].addEventListener('mouseover', () => replaceLetters(text[i], i))
     defaultTexts.push(text[i].innerHTML);
 }
 
-console.log(text.length);
+titleAnimValues = {
+    
+    titles: ['a Computer Science Student', 'an OBMEP Bronze Medalist', 'a Coder'],
+    step: 0,
+    delay: 25,
+    typeDelay: 50,
+    holdDuration: 2500,
+    iteration: 0,
+    txt: ''
+}
+
 //text.addEventListener('mouseover', () => replaceLetters(text));
 //var characters = '∐∑√∛∜∝∫∀αβγπϕω∞';
 var characters = '∑√∝∫αβγπϕω∞';
 var txt = '123456';
 
+function onLoad() {
+    replaceLetters(text[0], 0);
+}
 
 function animate() {
     let id = null;
@@ -25,7 +39,6 @@ function animate() {
 }
 
 function replaceLetters(ctrl, id) {
-    console.log('a');
     let iteration = 0;
     let interval = null;
     let originalText = ctrl.innerHTML;
@@ -43,6 +56,45 @@ function replaceLetters(ctrl, id) {
     }, 50)
 }
 
+var animateTitles = function() {    
+    let titles = titleAnimValues.titles;
+    let step = titleAnimValues.step;
+    let delay = titleAnimValues.delay;
+    let typeDelay = titleAnimValues.typeDelay;
+    let holdDuration = titleAnimValues.holdDuration;
+    let iteration = titleAnimValues.iteration;
+
+    
+    if (step < titles[iteration].length) {
+        titlesLine.innerHTML += titles[iteration].charAt(step);
+        titleAnimValues.step++;
+        titleAnimValues.delay = typeDelay;
+        titleAnimValues.txt = titles[iteration];
+    }
+     if(step == titles[iteration].length - 1) {titleAnimValues.delay = holdDuration; titleAnimValues.step++; }
+
+     if (step > titles[iteration].length) {
+        let str = titles[iteration];
+        for(let i = 0; i < step - titles[iteration].length; i++)
+        {
+            str = str.slice(0, -1);
+        }
+        titlesLine.innerHTML = str;
+        titleAnimValues.step++;
+        titleAnimValues.delay = typeDelay;
+    }
+
+    if(titlesLine.innerHTML.length <= 0)
+    {
+        titleAnimValues.step = 0;
+        titleAnimValues.iteration = iteration + 1 >= titles.length ? 0 : iteration + 1;
+    }
+    setTimeout(animateTitles, titleAnimValues.delay);
+}
+setTimeout(animateTitles, titleAnimValues.delay);
+
 String.prototype.replaceAt = function (index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
+
+onLoad()
