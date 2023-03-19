@@ -1,0 +1,20 @@
+body{
+    background-color: black;
+}
+
+h1{
+    color: white;
+    width: 670px;
+    font-size: 50px;
+    font-family: "Space Mono", monospace;
+    padding: 0px;
+    margin: 0px;
+}
+h2{
+    width: 200px;
+    color: white;
+    font-size: 30px;
+    font-family: "Space Mono", monospace;
+    padding: 0px;
+    margin: 0px;
+}
